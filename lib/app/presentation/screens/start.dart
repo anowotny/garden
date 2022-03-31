@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:garden/app/data/datasources/dao/plant_types_dao.dart';
+import 'package:garden/app/data/datasources/database.dart';
 import 'package:garden/app/data/models/plant_model.dart';
+import 'package:garden/app/domain/entities/plant_type.dart';
 import 'package:garden/app/presentation/screens/plant_form.dart';
 import 'package:garden/core/util/mock_json.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -12,6 +15,33 @@ class StartScreen extends StatefulWidget {
 }
 
 class _StartScreenState extends State<StartScreen> {
+  PlantTypeDao plantTypeDao;
+  @override
+  void initState() {
+    super.initState();
+    initDatabase();
+  }
+
+  Future<void> initDatabase() async {
+    final database =
+        await $FloorAppDatabase.databaseBuilder('my_database.db').build();
+    plantTypeDao = database.plantTypeDao;
+    // Get all data when start app.
+    // if (plantTypeDao != null) {
+    //   setState(() {
+    //     isLoading = true;
+    //   });
+    //   list = await getAllData();
+    //   setState(() {
+    //     isLoading = false;
+    //   });
+    // } else {
+    //   setState(() {
+    //     isLoading = false;
+    //   });
+    // }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,29 +84,79 @@ class _StartScreenState extends State<StartScreen> {
                     width: MediaQuery.of(context).size.width * 0.8,
                     height: MediaQuery.of(context).size.height * 0.4,
                     child: Scrollbar(
-                                          child: ListView.builder(
+                      child: ListView.builder(
                           itemCount: mockPlants == null ? 0 : mockPlants.length,
                           itemBuilder: (context, index) {
-                            final plant=PlantModel.fromJson(mockPlants[index]);
+                            final plant =
+                                PlantModel.fromJson(mockPlants[index]);
                             return ListTile(
-                              title: Text(plant.name, style: TextStyle(fontWeight: FontWeight.bold),),
-                              leading: Text(plant.name[0]+plant.name[plant.name.length-1]),
+                              title: Text(
+                                plant.name,
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              leading: Text(plant.name[0] +
+                                  plant.name[plant.name.length - 1]),
                               isThreeLine: true,
-                              subtitle: Text('${plant.type.toUpperCase()}\n${plant.plantingDate}'),
+                              subtitle: Text(
+                                  '${plant.typeId}\n${plant.plantingDate}'),
                             );
                           }),
                     ),
                   ),
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   RaisedButton(
                     onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context)=>PlantForm()));
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => PlantForm(
+                                title: "Add plant",
+                              )));
                     },
                     elevation: 0,
                     child: Text(
                       'Add plant'.toUpperCase(),
                     ),
-                  )
+                  ),
+                  Row(
+                    children: [
+                      RaisedButton(
+                        onPressed: () async {
+                          final PlantType pt =
+                              PlantType(id: null, name: 'alpines');
+                          await plantTypeDao.insertPlantType(pt);
+                        },
+                        elevation: 0,
+                        child: Text(
+                          'Add types'.toUpperCase(),
+                        ),
+                      ),
+                      RaisedButton(
+                        onPressed: () async {
+                          List<PlantType> types =
+                              await plantTypeDao.getAllPlantTypes();
+                          if (types.isNotEmpty) {
+                            types.forEach((element) {
+                              print('id ${element.id} name ${element.name}');
+                            });
+                          }else print('no elements');
+                        },
+                        elevation: 0,
+                        child: Text(
+                          'get types'.toUpperCase(),
+                        ),
+                      ),
+                      RaisedButton(
+                        onPressed: () async {
+                          final PlantType pt =
+                              PlantType(id: 1, name: 'alpines');
+                         await plantTypeDao.deletePlantType(pt);
+                        },
+                        elevation: 0,
+                        child: Text(
+                          'delete types'.toUpperCase(),
+                        ),
+                      ),
+                    ],
+                  ),
                 ]),
           ),
         ),

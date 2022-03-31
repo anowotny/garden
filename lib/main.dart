@@ -14,13 +14,13 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-          scaffoldBackgroundColor: Colors.lightGreen,
+          scaffoldBackgroundColor: Colors.teal[400],
           appBarTheme: AppBarTheme(elevation: 0),
-          primaryColor: Colors.lightGreen,
+          primaryColor: Colors.teal[400],
           accentColor: Colors.white,
           buttonTheme: ButtonThemeData(
-            splashColor: Colors.lightGreen,
-            buttonColor: Colors.lightGreen,
+            splashColor: Colors.teal[400],
+            buttonColor: Colors.teal[400],
             shape: RoundedRectangleBorder(
                       side: BorderSide(color: Colors.white),
                       borderRadius: BorderRadius.circular(18.0),
