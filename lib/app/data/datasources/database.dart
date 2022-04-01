@@ -14,3 +14,7 @@ abstract class AppDatabase extends FloorDatabase{
   PlantDao get plantDao;
   PlantTypeDao get plantTypeDao;
 }
+
+// class FloorDatabaseService{
+//   static
+// }

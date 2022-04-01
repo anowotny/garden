@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:garden/core/util/mock_json.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class PlantTypeDropdown extends StatefulWidget {
   const PlantTypeDropdown({
@@ -11,7 +12,7 @@ class PlantTypeDropdown extends StatefulWidget {
 }
 
 class _PlantTypeDropdownState extends State<PlantTypeDropdown> {
-  String currentValue;
+  int currentValue;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -21,23 +22,25 @@ class _PlantTypeDropdownState extends State<PlantTypeDropdown> {
       decoration: BoxDecoration(
           color: Colors.white, borderRadius: BorderRadius.circular(10)),
       child: DropdownButtonFormField(
+          value: currentValue,
           decoration: InputDecoration(
             border: InputBorder.none,
             contentPadding: EdgeInsets.only(left: 10.0),
             labelText: 'Plant type',
             // labelStyle: TextStyle(color: Colors.white),
           ),
-          items: mockPlantTypes.map((value) {
-            return DropdownMenuItem<String>(
-              value: value,
+          items: mockPlantTypes.map((map) {
+            return DropdownMenuItem(
+              value: map['id'],
               child: Text(
-                value,
+                map['name'],
               ),
             );
           }).toList(),
           onChanged: (value) {
             setState(() {
               currentValue = value;
+              print(currentValue);
             });
           }),
     );

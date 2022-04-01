@@ -158,13 +158,15 @@ class _$PlantDao extends PlantDao {
   }
 
   @override
-  Future<void> insertPlant(Plant plant) async {
-    await _plantInsertionAdapter.insert(plant, OnConflictStrategy.abort);
+  Future<int> insertPlant(Plant plant) {
+    return _plantInsertionAdapter.insertAndReturnId(
+        plant, OnConflictStrategy.abort);
   }
 
   @override
-  Future<void> updatePlant(Plant plant) async {
-    await _plantUpdateAdapter.update(plant, OnConflictStrategy.abort);
+  Future<int> updatePlant(Plant plant) {
+    return _plantUpdateAdapter.updateAndReturnChangedRows(
+        plant, OnConflictStrategy.abort);
   }
 }
 
@@ -209,13 +211,13 @@ class _$PlantTypeDao extends PlantTypeDao {
   }
 
   @override
-  Future<void> insertPlantType(PlantType plantType) async {
-    await _plantTypeInsertionAdapter.insert(
+  Future<int> insertPlantType(PlantType plantType) {
+    return _plantTypeInsertionAdapter.insertAndReturnId(
         plantType, OnConflictStrategy.abort);
   }
 
   @override
-  Future<void> deletePlantType(PlantType plantType) async {
-    await _plantTypeDeletionAdapter.delete(plantType);
+  Future<int> deletePlantType(PlantType plantType) {
+    return _plantTypeDeletionAdapter.deleteAndReturnChangedRows(plantType);
   }
 }
