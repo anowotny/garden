@@ -12,8 +12,8 @@ class PlantInitial extends PlantState {}
 class PlantLoading extends PlantState {}
 
 class PlantLoadSuccess extends PlantState {
-  final List<PlantModel> allPlants;
-  final List<PlantModel> filteredPlants;
+  final List<Plant> allPlants;
+  final List<Plant> filteredPlants;
 
   PlantLoadSuccess({this.allPlants, this.filteredPlants});
   @override

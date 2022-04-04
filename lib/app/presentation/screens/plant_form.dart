@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:garden/app/presentation/widgets/choose_date_button.dart';
-import 'package:garden/app/presentation/widgets/custom_textfield.dart';
-import 'package:garden/app/presentation/widgets/plant_type_dropdown.dart';
+import 'package:garden/app/presentation/widgets/plant_form/choose_date_button.dart';
+import 'package:garden/app/presentation/widgets/start/custom_textfield.dart';
+import 'package:garden/app/presentation/widgets/plant_form/plant_type_dropdown.dart';
 import 'package:garden/core/util/mock_json.dart';
 import 'package:google_fonts/google_fonts.dart';
 

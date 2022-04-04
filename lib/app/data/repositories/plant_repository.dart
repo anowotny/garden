@@ -13,7 +13,9 @@ import 'package:injectable/injectable.dart';
 
 @LazySingleton(as: IPlantRepository)
 class PlantRepository extends IPlantRepository {
-   PlantDao plantDao;
+  final AppDatabase _database;
+
+  PlantRepository(this._database);
 
   // PlantRepository({@required this.plantDao});
 
@@ -21,7 +23,7 @@ class PlantRepository extends IPlantRepository {
   @override
   Future<Either<Failure, int>> addPlant(Plant plant) async {
     try {
-      int primaryKey = await plantDao.insertPlant(plant);
+      int primaryKey = await _database.plantDao.insertPlant(plant);
       return Right(primaryKey);
     } on ServerException catch (error) {
       return Left(ServerFailure(error.message));
@@ -41,7 +43,7 @@ class PlantRepository extends IPlantRepository {
   @override
   Future<Either<Failure, List<Plant>>> getAllPlants() async {
     try {
-      final allPlants = await plantDao.getAllPlants();
+      final allPlants = await _database.plantDao.getAllPlants();
       if (allPlants == null) {
         throw NotFoundException(message: NOT_FOUND_EXCEPTION);
       } else
@@ -66,7 +68,7 @@ class PlantRepository extends IPlantRepository {
   @override
   Future<Either<Failure, Plant>> getPlantByName(String plantName) async {
     try {
-      final result = await plantDao.getPlant(plantName);
+      final result = await _database.plantDao.getPlant(plantName);
       if (result == null) {
         throw NotFoundException();
       } else
@@ -89,7 +91,7 @@ class PlantRepository extends IPlantRepository {
   @override
   Future<Either<Failure, int>> updatePlant(Plant plant) async {
     try {
-      final result = await plantDao.updatePlant(plant);
+      final result = await _database.plantDao.updatePlant(plant);
       return Right(result);
     } on ServerException catch (error) {
       return Left(ServerFailure(error.message));

@@ -17,6 +17,6 @@ abstract class RegisterModule {
   Future<AppDatabase> get database =>
       $FloorAppDatabase.databaseBuilder('my_database.db').build();
   
-  @lazySingleton
-  Future<PlantDao> get plantDao=> database..plantDao;
+  // @lazySingleton
+  // Future<PlantDao> get plantDao=> database..plantDao;
 }
