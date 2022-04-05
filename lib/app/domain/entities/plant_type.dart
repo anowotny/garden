@@ -11,4 +11,8 @@ class PlantType extends Equatable {
 
   @override
   List<Object> get props => [id, name];
+
+  factory PlantType.fromJson(Map<String, dynamic> json) {
+    return PlantType(id: json['id'], name: json['name']);
+  }
 }

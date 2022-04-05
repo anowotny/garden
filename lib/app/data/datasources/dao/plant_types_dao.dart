@@ -1,8 +1,6 @@
 import 'package:floor/floor.dart';
-import 'package:garden/app/data/models/plant_model.dart';
-import 'package:garden/app/domain/entities/plant.dart';
-import 'package:garden/app/domain/entities/plant_type.dart';
-import 'package:injectable/injectable.dart';
+
+import '../../../domain/entities/plant_type.dart';
 
 // @lazySingleton
 @dao
@@ -11,7 +9,7 @@ abstract class PlantTypeDao {
   Future<List<PlantType>> getAllPlantTypes();
 
   @Query('SELECT * FROM Plant WHERE id= :id')
-  Future<PlantType> getPlantType(String id);
+  Future<PlantType> getPlantType(int id);
 
   @insert
   Future<int> insertPlantType(PlantType plantType);

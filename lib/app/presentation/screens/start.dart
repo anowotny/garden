@@ -18,17 +18,17 @@ class StartScreen extends StatefulWidget {
 }
 
 class _StartScreenState extends State<StartScreen> {
-  // PlantTypeDao plantTypeDao;
+  PlantTypeDao plantTypeDao;
   @override
   void initState() {
     super.initState();
-    // initDatabase();
+    initDatabase();
   }
 
   Future<void> initDatabase() async {
-    // final database =
-    //     await $FloorAppDatabase.databaseBuilder('my_database.db').build();
-    // plantTypeDao = database.plantTypeDao;
+    final database =
+        await $FloorAppDatabase.databaseBuilder('my_database.db').build();
+    plantTypeDao = database.plantTypeDao;
     // Get all data when start app.
     // if (plantTypeDao != null) {
     //   setState(() {
@@ -102,51 +102,66 @@ class _StartScreenState extends State<StartScreen> {
                             'Add plant'.toUpperCase(),
                           ),
                         ),
-                        Row(
-                          children: [
-                            RaisedButton(
-                              onPressed: () async {
-                                // final PlantType pt =
-                                //     PlantType(id: null, name: 'alpines');
-                                // await plantTypeDao.insertPlantType(pt);
-                              },
-                              elevation: 0,
-                              child: Text(
-                                'Add types'.toUpperCase(),
-                              ),
-                            ),
-                            RaisedButton(
-                              onPressed: () async {
-                                // List<PlantType> types =
-                                //     await plantTypeDao.getAllPlantTypes();
-                                // if (types.isNotEmpty) {
-                                //   types.forEach((element) {
-                                //     print(
-                                //         'id ${element.id} name ${element.name}');
-                                //   });
-                                // } else
-                                //   print('no elements');
-                              },
-                              elevation: 0,
-                              child: Text(
-                                'get types'.toUpperCase(),
-                              ),
-                            ),
-                            RaisedButton(
-                              onPressed: () async {
-                                // final PlantType pt =
-                                //     PlantType(id: 1, name: 'alpines');
-                                // await plantTypeDao.deletePlantType(pt);
-                              },
-                              elevation: 0,
-                              child: Text(
-                                'delete types'.toUpperCase(),
-                              ),
-                            ),
-                          ],
-                        ),
+                        // Row(
+                        //   children: [
+                        //     RaisedButton(
+                        //       onPressed: () async {
+                        //         // final PlantType pt =
+                        //         //     PlantType(id: null, name: 'alpines');
+                        //         // await plantTypeDao.insertPlantType(pt);
+                        //       },
+                        //       elevation: 0,
+                        //       child: Text(
+                        //         'Add types'.toUpperCase(),
+                        //       ),
+                        //     ),
+                        //     RaisedButton(
+                        //       onPressed: () async {
+                        //         // List<PlantType> types =
+                        //         //     await plantTypeDao.getAllPlantTypes();
+                        //         // if (types.isNotEmpty) {
+                        //         //   types.forEach((element) {
+                        //         //     print(
+                        //         //         'id ${element.id} name ${element.name}');
+                        //         //   });
+                        //         // } else
+                        //         //   print('no elements');
+                        //       },
+                        //       elevation: 0,
+                        //       child: Text(
+                        //         'get types'.toUpperCase(),
+                        //       ),
+                        //     ),
+                        //     RaisedButton(
+                        //       onPressed: () async {
+                        //         final PlantType pt =
+                        //             PlantType(id: 18, name: 'trees');
+                        //        final vari= await plantTypeDao.deletePlantType(pt);
+                        //        print(vari);
+                        //       },
+                        //       elevation: 0,
+                        //       child: Text(
+                        //         'delete types'.toUpperCase(),
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
                       ]),
                 ),
+              );
+            } else if (state is PlantLoading) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (state is PlantLoadFailure) {
+              return Column(
+                children: [
+                  Text(state.error),
+                  RaisedButton(
+                    onPressed: () {},
+                    child: Text('Try again'),
+                  )
+                ],
               );
             } else {
               return Text(state.toString());
@@ -157,4 +172,3 @@ class _StartScreenState extends State<StartScreen> {
     );
   }
 }
-

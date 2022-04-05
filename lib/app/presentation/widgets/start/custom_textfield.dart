@@ -3,9 +3,11 @@ import 'package:google_fonts/google_fonts.dart';
 
 class CustomTextfield extends StatefulWidget {
   final TextEditingController controller;
+  final String plantName;
   const CustomTextfield({
     Key key,
     @required this.controller,
+    this.plantName,
   }) : super(key: key);
 
   @override
@@ -13,6 +15,14 @@ class CustomTextfield extends StatefulWidget {
 }
 
 class _CustomTextfieldState extends State<CustomTextfield> {
+  @override
+  void initState() {
+    if (widget.plantName != null) {
+      widget.controller.text = widget.plantName;
+    }
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(

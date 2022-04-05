@@ -38,36 +38,36 @@ final mockPlants = [
 
 final mockPlantTypes = [
   {
-    'id': 1,
+    'id': null,
     'name': 'alpines',
   },
   {
-    'id': 2,
+    'id': null,
     'name': 'aquatic',
   },
   {
-    'id': 3,
+    'id': null,
     'name': 'bulbs',
   },
   {
-    'id': 4,
+    'id': null,
     'name': 'succulents',
   },
   {
-    'id': 5,
+    'id': null,
     'name': 'carnivorous',
   },
   {
-    'id': 6,
+    'id': null,
     'name': 'climbers',
   },
   {
-    'id': 7,
+    'id': null,
     'name': 'ferns',
   },
   {
-    'id': 8,
+    'id': null,
     'name': 'grasses',
   },
-  {'id': 9, 'name': 'threes'},
+  {'id': null, 'name': 'trees'},
 ];

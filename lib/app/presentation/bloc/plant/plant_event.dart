@@ -19,10 +19,19 @@ class PlantFiltered extends PlantEvent {
 
 // class AddPlantPressed extends PlantEvent{}
 
-class SavePlantPressed extends PlantEvent {
+class SaveNewPlantPressed extends PlantEvent {
   final Plant newPlant;
 
-  SavePlantPressed(this.newPlant);
+  SaveNewPlantPressed(this.newPlant);
+
+  @override
+  List<Object> get props => [newPlant];
+}
+
+class SaveUpdatedPlantPressed extends PlantEvent {
+  final Plant newPlant;
+
+  SaveUpdatedPlantPressed(this.newPlant);
 
   @override
   List<Object> get props => [newPlant];

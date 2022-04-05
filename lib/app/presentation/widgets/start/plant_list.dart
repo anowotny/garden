@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:garden/app/data/models/plant_model.dart';
 import 'package:garden/app/presentation/bloc/plant/plant_bloc.dart';
+import 'package:garden/app/presentation/screens/plant_form.dart';
+import 'package:intl/intl.dart';
 
 class PlantsList extends StatefulWidget {
   const PlantsList({
@@ -36,6 +38,11 @@ class _PlantsListState extends State<PlantsList> {
                         : state.filteredPlants.length,
                     itemBuilder: (context, index) {
                       final plant = state.filteredPlants[index];
+                      final type = state.plantTypes
+                          .firstWhere((element) => element.id == plant.typeId);
+                      final date = DateFormat("dd/MM/yyyy").format(
+                          DateTime.fromMillisecondsSinceEpoch(
+                              plant.plantingDate));
                       return ListTile(
                         title: Text(
                           plant.name,
@@ -44,8 +51,11 @@ class _PlantsListState extends State<PlantsList> {
                         leading: Text(
                             plant.name[0] + plant.name[plant.name.length - 1]),
                         isThreeLine: true,
-                        subtitle:
-                            Text('${plant.typeId}\n${plant.plantingDate}'),
+                        subtitle: Text('${type.name}\nPlanting date: ${date}'),
+                        // on
+                        onTap: (){
+                          Navigator.of(context).push(MaterialPageRoute(builder:(context)=>PlantForm(title: 'Edit plant',plant: plant,)));
+                        },
                       );
                     });
               }

@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:garden/core/util/mock_json.dart';
-import 'package:google_fonts/google_fonts.dart';
+
+import '../../../domain/entities/plant_type.dart';
+
+typedef OnChangeCallback = void Function(dynamic value);
 
 class PlantTypeDropdown extends StatefulWidget {
-  const PlantTypeDropdown({
-    Key key,
-  }) : super(key: key);
+  final List<PlantType> plantTypes;
+  int selectedTypeId;
+  final OnChangeCallback onChanged;
+  PlantTypeDropdown(
+      {Key key,
+      @required this.plantTypes,
+      @required this.selectedTypeId,
+      @required this.onChanged})
+      : super(key: key);
 
   @override
   _PlantTypeDropdownState createState() => _PlantTypeDropdownState();
@@ -13,6 +21,14 @@ class PlantTypeDropdown extends StatefulWidget {
 
 class _PlantTypeDropdownState extends State<PlantTypeDropdown> {
   int currentValue;
+  @override
+  void initState() {
+    if (widget.selectedTypeId != null) {
+      currentValue = widget.selectedTypeId;
+    }
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -29,18 +45,19 @@ class _PlantTypeDropdownState extends State<PlantTypeDropdown> {
             labelText: 'Plant type',
             // labelStyle: TextStyle(color: Colors.white),
           ),
-          items: mockPlantTypes.map((map) {
+          items: widget.plantTypes.map((pType) {
             return DropdownMenuItem(
-              value: map['id'],
+              value: pType.id,
               child: Text(
-                map['name'],
+                pType.name,
               ),
             );
           }).toList(),
-          onChanged: (value) {
+          onChanged: (int value) {
             setState(() {
               currentValue = value;
-              print(currentValue);
+              widget.selectedTypeId = currentValue;
+              widget.onChanged(value);
             });
           }),
     );

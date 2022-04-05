@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:garden/app/domain/entities/plant_type.dart';
 import 'package:meta/meta.dart';
 import 'package:flutter/services.dart';
 import 'package:garden/app/data/datasources/dao/plant_dao.dart';
@@ -17,7 +18,6 @@ class PlantRepository extends IPlantRepository {
 
   PlantRepository(this._database);
 
-  // PlantRepository({@required this.plantDao});
 
 //TODO add data connection checker
   @override
@@ -93,6 +93,78 @@ class PlantRepository extends IPlantRepository {
     try {
       final result = await _database.plantDao.updatePlant(plant);
       return Right(result);
+    } on ServerException catch (error) {
+      return Left(ServerFailure(error.message));
+    } on BadRequestException catch (error) {
+      return Left(BadRequestFailure(error.message));
+    } on UnauthorizedException {
+      return Left(UnauthorizedFailure(CREDENTIALS_REJECTED));
+    } on SocketException {
+      return Left(SocketFailure(SOCKET_FAILURE));
+    } on PlatformException catch (e) {
+      print('ERROR');
+      print(e.toString());
+      return Left(PlatformFailure(PLATFORM_FAILURE));
+    }
+  }
+
+  @override
+  Future<Either<Failure, int>> addPlantType(PlantType plantType) async {
+    try {
+      int primaryKey = await _database.plantTypeDao.insertPlantType(plantType);
+      return Right(primaryKey);
+    } on ServerException catch (error) {
+      return Left(ServerFailure(error.message));
+    } on BadRequestException catch (error) {
+      return Left(BadRequestFailure(error.message));
+    } on UnauthorizedException {
+      return Left(UnauthorizedFailure(CREDENTIALS_REJECTED));
+    } on SocketException {
+      return Left(SocketFailure(SOCKET_FAILURE));
+    } on PlatformException catch (e) {
+      print('ERROR');
+      print(e.toString());
+      return Left(PlatformFailure(PLATFORM_FAILURE));
+    }
+  }
+
+  @override
+  Future<Either<Failure, int>> deletePlantType(PlantType plantType) {
+    // TODO: implement deletePlantType
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Either<Failure, List<PlantType>>> getAllPlantTypes()async {
+    try {
+      final result = await _database.plantTypeDao.getAllPlantTypes();
+      if (result == null) {
+        throw NotFoundException();
+      } else
+        return Right(result);
+    } on ServerException catch (error) {
+      return Left(ServerFailure(error.message));
+    } on BadRequestException catch (error) {
+      return Left(BadRequestFailure(error.message));
+    } on UnauthorizedException {
+      return Left(UnauthorizedFailure(CREDENTIALS_REJECTED));
+    } on SocketException {
+      return Left(SocketFailure(SOCKET_FAILURE));
+    } on PlatformException catch (e) {
+      print('ERROR');
+      print(e.toString());
+      return Left(PlatformFailure(PLATFORM_FAILURE));
+    }
+  }
+
+  @override
+  Future<Either<Failure, PlantType>> getPlantTypeById(int id)async {
+   try {
+      final result = await _database.plantTypeDao.getPlantType(id);
+      if (result == null) {
+        throw NotFoundException();
+      } else
+        return Right(result);
     } on ServerException catch (error) {
       return Left(ServerFailure(error.message));
     } on BadRequestException catch (error) {

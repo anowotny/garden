@@ -203,7 +203,7 @@ class _$PlantTypeDao extends PlantTypeDao {
   }
 
   @override
-  Future<PlantType> getPlantType(String id) async {
+  Future<PlantType> getPlantType(int id) async {
     return _queryAdapter.query('SELECT * FROM Plant WHERE id= ?',
         arguments: <dynamic>[id],
         mapper: (Map<String, dynamic> row) =>

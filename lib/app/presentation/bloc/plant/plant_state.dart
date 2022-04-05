@@ -14,10 +14,11 @@ class PlantLoading extends PlantState {}
 class PlantLoadSuccess extends PlantState {
   final List<Plant> allPlants;
   final List<Plant> filteredPlants;
+  final List<PlantType> plantTypes;
 
-  PlantLoadSuccess({this.allPlants, this.filteredPlants});
+  PlantLoadSuccess( {this.allPlants, this.filteredPlants,this.plantTypes,});
   @override
-  List<Object> get props => [allPlants, filteredPlants];
+  List<Object> get props => [allPlants, filteredPlants, plantTypes];
 }
 
 class PlantLoadFailure extends PlantState {
@@ -27,3 +28,4 @@ class PlantLoadFailure extends PlantState {
   @override
   List<Object> get props => [error];
 }
+class PlantAddedSuccessfully extends PlantState{}
