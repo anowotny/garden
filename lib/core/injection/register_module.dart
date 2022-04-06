@@ -10,13 +10,7 @@ abstract class RegisterModule {
   @lazySingleton
   DataConnectionChecker get connectionChecker => DataConnectionChecker();
 
-  // @lazySingleton
-  // PlantDao get plantDao=>PlantDao();
-
   @preResolve
   Future<AppDatabase> get database =>
       $FloorAppDatabase.databaseBuilder('my_database.db').build();
-  
-  // @lazySingleton
-  // Future<PlantDao> get plantDao=> database..plantDao;
 }

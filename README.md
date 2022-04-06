@@ -1,16 +1,23 @@
 # garden
 
-A new Flutter project.
 
-## Getting Started
+## Informacje ogólne
 
-This project is a starting point for a Flutter application.
+Aplikacja zostła utworzona za pomocą Fluttera w wersji 1.22.6 (Dart 2.10.5).
+W celu zainstalowania niezbędnych zależności należy użyć komendy
+```flutter pub run build_runner watch --delete-conflicting-outputs```
+Zastosowano bibliotekę BLoC do zarządzania stanem aplikacji, Injectable i GetIt do dependency injection.
 
-A few resources to get you started if this is your first Flutter project:
+## Plan działania
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+- utworzenie modeli Plant i PlantType z potrzebnymi parametrami
+- implementacja lokalnej bazy danych wraz z encjami Plant i PlantType
+- utworzenie interfejsu IPlantRepository i repozytorium PlantRepository
+- utworzenie bloku PlantBloc wraz z wartościami State i Event
+- budowa UI
+- integracja UI z blokiem
+- poprawki w UI
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Elementy dodatkowe, pominięte, propozycje
+- W miarę rozwoju aplikacji można by użyć bibliotek JsonSerialization do generowania funkcji toJson, fromJson. Ze względu na mały rozmiar projektu zrezygnowałam z tego rozwiązania. 
+- Nie zdążyłam dodać testów, paginacji i SnackBara.

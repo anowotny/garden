@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:garden/app/data/datasources/dao/plant_types_dao.dart';
-import 'package:garden/app/data/datasources/database.dart';
-import 'package:garden/app/data/models/plant_model.dart';
-import 'package:garden/app/domain/entities/plant_type.dart';
-import 'package:garden/app/presentation/bloc/plant/plant_bloc.dart';
-import 'package:garden/app/presentation/screens/plant_form.dart';
-import 'package:garden/app/presentation/widgets/start/plant_list.dart';
-import 'package:garden/core/util/mock_json.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../../data/datasources/dao/plant_types_dao.dart';
+import '../../data/datasources/database.dart';
+import '../bloc/plant/plant_bloc.dart';
+import '../widgets/start/plant_list.dart';
+import 'plant_form.dart';
 
 class StartScreen extends StatefulWidget {
   const StartScreen({Key key}) : super(key: key);
@@ -18,33 +16,6 @@ class StartScreen extends StatefulWidget {
 }
 
 class _StartScreenState extends State<StartScreen> {
-  PlantTypeDao plantTypeDao;
-  @override
-  void initState() {
-    super.initState();
-    initDatabase();
-  }
-
-  Future<void> initDatabase() async {
-    final database =
-        await $FloorAppDatabase.databaseBuilder('my_database.db').build();
-    plantTypeDao = database.plantTypeDao;
-    // Get all data when start app.
-    // if (plantTypeDao != null) {
-    //   setState(() {
-    //     isLoading = true;
-    //   });
-    //   list = await getAllData();
-    //   setState(() {
-    //     isLoading = false;
-    //   });
-    // } else {
-    //   setState(() {
-    //     isLoading = false;
-    //   });
-    // }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,10 +23,14 @@ class _StartScreenState extends State<StartScreen> {
       body: SafeArea(
         child: BlocConsumer<PlantBloc, PlantState>(
           listener: (context, state) {
-            // TODO: implement listener
+            if (state is PlantAddedSuccessfully) {
+              Scaffold.of(context).showSnackBar(SnackBar(
+                duration: Duration(seconds: 1),
+                content: Text('Zaktualizowano pole ${state.plantName}'),
+              ));
+            }
           },
           builder: (context, state) {
-            print(state.toString());
             if (state is PlantLoadSuccess) {
               return SingleChildScrollView(
                 child: Center(
@@ -84,6 +59,10 @@ class _StartScreenState extends State<StartScreen> {
                                           BorderSide(color: Colors.white))),
                               cursorColor: Colors.white,
                               style: GoogleFonts.roboto(color: Colors.white),
+                              onChanged: (String value) {
+                                BlocProvider.of<PlantBloc>(context)
+                                    .add(PlantFiltered(value));
+                              },
                             ),
                           ),
                         ),
@@ -102,50 +81,6 @@ class _StartScreenState extends State<StartScreen> {
                             'Add plant'.toUpperCase(),
                           ),
                         ),
-                        // Row(
-                        //   children: [
-                        //     RaisedButton(
-                        //       onPressed: () async {
-                        //         // final PlantType pt =
-                        //         //     PlantType(id: null, name: 'alpines');
-                        //         // await plantTypeDao.insertPlantType(pt);
-                        //       },
-                        //       elevation: 0,
-                        //       child: Text(
-                        //         'Add types'.toUpperCase(),
-                        //       ),
-                        //     ),
-                        //     RaisedButton(
-                        //       onPressed: () async {
-                        //         // List<PlantType> types =
-                        //         //     await plantTypeDao.getAllPlantTypes();
-                        //         // if (types.isNotEmpty) {
-                        //         //   types.forEach((element) {
-                        //         //     print(
-                        //         //         'id ${element.id} name ${element.name}');
-                        //         //   });
-                        //         // } else
-                        //         //   print('no elements');
-                        //       },
-                        //       elevation: 0,
-                        //       child: Text(
-                        //         'get types'.toUpperCase(),
-                        //       ),
-                        //     ),
-                        //     RaisedButton(
-                        //       onPressed: () async {
-                        //         final PlantType pt =
-                        //             PlantType(id: 18, name: 'trees');
-                        //        final vari= await plantTypeDao.deletePlantType(pt);
-                        //        print(vari);
-                        //       },
-                        //       elevation: 0,
-                        //       child: Text(
-                        //         'delete types'.toUpperCase(),
-                        //       ),
-                        //     ),
-                        //   ],
-                        // ),
                       ]),
                 ),
               );

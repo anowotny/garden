@@ -2,7 +2,6 @@ import 'package:floor/floor.dart';
 
 import '../../../domain/entities/plant_type.dart';
 
-// @lazySingleton
 @dao
 abstract class PlantTypeDao {
   @Query('SELECT * FROM PlantType')

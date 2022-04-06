@@ -18,7 +18,6 @@ class PlantRepository extends IPlantRepository {
 
   PlantRepository(this._database);
 
-
 //TODO add data connection checker
   @override
   Future<Either<Failure, int>> addPlant(Plant plant) async {
@@ -29,14 +28,6 @@ class PlantRepository extends IPlantRepository {
       return Left(ServerFailure(error.message));
     } on BadRequestException catch (error) {
       return Left(BadRequestFailure(error.message));
-    } on UnauthorizedException {
-      return Left(UnauthorizedFailure(CREDENTIALS_REJECTED));
-    } on SocketException {
-      return Left(SocketFailure(SOCKET_FAILURE));
-    } on PlatformException catch (e) {
-      print('ERROR');
-      print(e.toString());
-      return Left(PlatformFailure(PLATFORM_FAILURE));
     }
   }
 
@@ -54,14 +45,6 @@ class PlantRepository extends IPlantRepository {
       return Left(ServerFailure(error.message));
     } on BadRequestException catch (error) {
       return Left(BadRequestFailure(error.message));
-    } on UnauthorizedException {
-      return Left(UnauthorizedFailure(CREDENTIALS_REJECTED));
-    } on SocketException {
-      return Left(SocketFailure(SOCKET_FAILURE));
-    } on PlatformException catch (e) {
-      print('ERROR');
-      print(e.toString());
-      return Left(PlatformFailure(PLATFORM_FAILURE));
     }
   }
 
@@ -77,14 +60,6 @@ class PlantRepository extends IPlantRepository {
       return Left(ServerFailure(error.message));
     } on BadRequestException catch (error) {
       return Left(BadRequestFailure(error.message));
-    } on UnauthorizedException {
-      return Left(UnauthorizedFailure(CREDENTIALS_REJECTED));
-    } on SocketException {
-      return Left(SocketFailure(SOCKET_FAILURE));
-    } on PlatformException catch (e) {
-      print('ERROR');
-      print(e.toString());
-      return Left(PlatformFailure(PLATFORM_FAILURE));
     }
   }
 
@@ -97,14 +72,6 @@ class PlantRepository extends IPlantRepository {
       return Left(ServerFailure(error.message));
     } on BadRequestException catch (error) {
       return Left(BadRequestFailure(error.message));
-    } on UnauthorizedException {
-      return Left(UnauthorizedFailure(CREDENTIALS_REJECTED));
-    } on SocketException {
-      return Left(SocketFailure(SOCKET_FAILURE));
-    } on PlatformException catch (e) {
-      print('ERROR');
-      print(e.toString());
-      return Left(PlatformFailure(PLATFORM_FAILURE));
     }
   }
 
@@ -117,14 +84,6 @@ class PlantRepository extends IPlantRepository {
       return Left(ServerFailure(error.message));
     } on BadRequestException catch (error) {
       return Left(BadRequestFailure(error.message));
-    } on UnauthorizedException {
-      return Left(UnauthorizedFailure(CREDENTIALS_REJECTED));
-    } on SocketException {
-      return Left(SocketFailure(SOCKET_FAILURE));
-    } on PlatformException catch (e) {
-      print('ERROR');
-      print(e.toString());
-      return Left(PlatformFailure(PLATFORM_FAILURE));
     }
   }
 
@@ -135,7 +94,7 @@ class PlantRepository extends IPlantRepository {
   }
 
   @override
-  Future<Either<Failure, List<PlantType>>> getAllPlantTypes()async {
+  Future<Either<Failure, List<PlantType>>> getAllPlantTypes() async {
     try {
       final result = await _database.plantTypeDao.getAllPlantTypes();
       if (result == null) {
@@ -146,20 +105,12 @@ class PlantRepository extends IPlantRepository {
       return Left(ServerFailure(error.message));
     } on BadRequestException catch (error) {
       return Left(BadRequestFailure(error.message));
-    } on UnauthorizedException {
-      return Left(UnauthorizedFailure(CREDENTIALS_REJECTED));
-    } on SocketException {
-      return Left(SocketFailure(SOCKET_FAILURE));
-    } on PlatformException catch (e) {
-      print('ERROR');
-      print(e.toString());
-      return Left(PlatformFailure(PLATFORM_FAILURE));
     }
   }
 
   @override
-  Future<Either<Failure, PlantType>> getPlantTypeById(int id)async {
-   try {
+  Future<Either<Failure, PlantType>> getPlantTypeById(int id) async {
+    try {
       final result = await _database.plantTypeDao.getPlantType(id);
       if (result == null) {
         throw NotFoundException();
@@ -169,14 +120,6 @@ class PlantRepository extends IPlantRepository {
       return Left(ServerFailure(error.message));
     } on BadRequestException catch (error) {
       return Left(BadRequestFailure(error.message));
-    } on UnauthorizedException {
-      return Left(UnauthorizedFailure(CREDENTIALS_REJECTED));
-    } on SocketException {
-      return Left(SocketFailure(SOCKET_FAILURE));
-    } on PlatformException catch (e) {
-      print('ERROR');
-      print(e.toString());
-      return Left(PlatformFailure(PLATFORM_FAILURE));
     }
   }
 }

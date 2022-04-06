@@ -31,9 +31,7 @@ class _PlantFormState extends State<PlantForm> {
       selectedTypeId = widget.plant.typeId;
       selectedDate =
           DateTime.fromMillisecondsSinceEpoch(widget.plant.plantingDate);
-          print(selectedDate);
-          print(selectedTypeId);
-          plantName=widget.plant.name;
+      plantName = widget.plant.name;
     }
     super.initState();
   }
@@ -107,6 +105,16 @@ class _PlantFormState extends State<PlantForm> {
                     })
               ],
             );
+          } else if (state is PlantAddedSuccessfully) {
+            return Center(
+              child: Column(
+                children: [
+                  Text('Saving changes',
+                      style: TextStyle(color: Colors.white, fontSize: 20)),
+                  CircularProgressIndicator(),
+                ],
+              ),
+            );
           } else
             return Container(
               child: Text(state.toString()),
@@ -117,20 +125,17 @@ class _PlantFormState extends State<PlantForm> {
   }
 
   _onSavePressed() {
-    print(plantController.text);
-    print(selectedTypeId);
-    print(selectedDate);
-    if(widget.title.toLowerCase().contains('add')){
-    BlocProvider.of<PlantBloc>(context).add(SaveNewPlantPressed(Plant(
-        name: plantController.text,
-        plantingDate: selectedDate.millisecondsSinceEpoch,
-        typeId: selectedTypeId)));
-    }else if(widget.title.toLowerCase().contains('edit')){
+    if (widget.title.toLowerCase().contains('add')) {
+      BlocProvider.of<PlantBloc>(context).add(SaveNewPlantPressed(Plant(
+          name: plantController.text,
+          plantingDate: selectedDate.millisecondsSinceEpoch,
+          typeId: selectedTypeId)));
+    } else if (widget.title.toLowerCase().contains('update')) {
       BlocProvider.of<PlantBloc>(context).add(SaveUpdatedPlantPressed(Plant(
-        plantId: widget.plant.plantId,
-        name: plantController.text,
-        plantingDate: selectedDate.millisecondsSinceEpoch,
-        typeId: selectedTypeId)));
+          plantId: widget.plant.plantId,
+          name: plantController.text,
+          plantingDate: selectedDate.millisecondsSinceEpoch,
+          typeId: selectedTypeId)));
     }
   }
 }

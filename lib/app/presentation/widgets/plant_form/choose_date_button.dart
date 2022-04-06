@@ -59,8 +59,6 @@ class _ChooseDateButtonState extends State<ChooseDateButton> {
         builder: (context, Widget child) {
           return Theme(
               data: ThemeData.light().copyWith(
-                  // primaryColor: Colors.grey[800],
-                  // accentColor: Colors.orange,
                   colorScheme: ColorScheme.light(primary: Colors.teal[400]),
                   buttonTheme:
                       ButtonThemeData(textTheme: ButtonTextTheme.primary)),
@@ -73,8 +71,6 @@ class _ChooseDateButtonState extends State<ChooseDateButton> {
 
     if (date != null) {
       final convertedDate = convertDate(date);
-      // BlocProvider.of<CaloriesBloc>(context)
-      //     .add(ChangeDateButtonPressed(convertedDate));
       buttonText = convertedDate;
       setState(() {
         selectedDate = date;

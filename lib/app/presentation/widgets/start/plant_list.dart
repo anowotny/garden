@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:garden/app/data/models/plant_model.dart';
 import 'package:garden/app/presentation/bloc/plant/plant_bloc.dart';
 import 'package:garden/app/presentation/screens/plant_form.dart';
 import 'package:intl/intl.dart';
@@ -25,8 +24,16 @@ class _PlantsListState extends State<PlantsList> {
       width: MediaQuery.of(context).size.width * 0.8,
       height: MediaQuery.of(context).size.height * 0.4,
       child: Scrollbar(
+
         child: BlocConsumer<PlantBloc, PlantState>(
-          listener: (context, state) {},
+          listener: (context, state) {
+            if(state is PlantAddedSuccessfully){
+              Scaffold.of(context).showSnackBar(SnackBar(
+                duration: Duration(seconds: 1),
+                content: Text('Zaktualizowano pole ${state.plantName}'),
+              ));
+            }
+          },
           builder: (context, state) {
             if (state is PlantLoadSuccess) {
               if (state.filteredPlants.length == 0) {
@@ -51,10 +58,10 @@ class _PlantsListState extends State<PlantsList> {
                         leading: Text(
                             plant.name[0] + plant.name[plant.name.length - 1]),
                         isThreeLine: true,
-                        subtitle: Text('${type.name}\nPlanting date: ${date}'),
+                        subtitle: Text('${type.name}\nPlanting date: $date'),
                         // on
                         onTap: (){
-                          Navigator.of(context).push(MaterialPageRoute(builder:(context)=>PlantForm(title: 'Edit plant',plant: plant,)));
+                          Navigator.of(context).push(MaterialPageRoute(builder:(context)=>PlantForm(title: 'Update plant',plant: plant,)));
                         },
                       );
                     });

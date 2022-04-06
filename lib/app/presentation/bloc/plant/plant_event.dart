@@ -17,8 +17,6 @@ class PlantFiltered extends PlantEvent {
   List<Object> get props => [filter];
 }
 
-// class AddPlantPressed extends PlantEvent{}
-
 class SaveNewPlantPressed extends PlantEvent {
   final Plant newPlant;
 
