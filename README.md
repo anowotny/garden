@@ -20,4 +20,4 @@ Zastosowano bibliotekę BLoC do zarządzania stanem aplikacji, Injectable i GetI
 
 ## Elementy dodatkowe, pominięte, propozycje
 - W miarę rozwoju aplikacji można by użyć bibliotek JsonSerialization do generowania funkcji toJson, fromJson. Ze względu na mały rozmiar projektu zrezygnowałam z tego rozwiązania. 
-- Nie zdążyłam dodać testów, paginacji i SnackBara.
+
